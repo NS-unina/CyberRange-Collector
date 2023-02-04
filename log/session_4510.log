@@ -1,0 +1,11 @@
+12:32:33.675
+Script started on 2023-02-04 12:32:33-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="77" LINES="27"]12:32:33.762
+]0;kali@kali: ~/Documents/script[0m[27m[24m[J[32m┌──([1m[32m[34mkali㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documents/script[0m[32m]12:32:35.964
+└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004h[36mls[39m[36me[36mc[36mho[39m chistest final_[16D[36ms[36mo[36mu[36mr[36mc[36me[39m [1ml[1mo[1mg[1m_[1mt[1mo[1mo[1ml[1m.[1msh[0m [32m-start[39m[32mo[32mp[39m[39m [?1l>[?2004l12:32:36.020
+File "/home/kali/Documents/script/elab_JSON.py", line 3912:32:36.023
+file_path = os.path.join(screenshot_folder, filename)12:32:36.026
+^12:32:36.030
+IndentationError: expected an indented block after 'if' statement on line 3812:32:36.077
+]0;kali@kali: ~/Documents/script12:32:36.158
+[0m[27m[24m[J[32m┌──([1m[32m[34mkali㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documents/script[0m[32m]12:35:25.778
+└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004h[?2004l
