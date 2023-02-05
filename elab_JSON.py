@@ -51,11 +51,20 @@ def process_log_file(file_path: str) -> dict:
         content_without_escape_codes = remove_escape_codes(content)
         session_id = os.path.splitext(os.path.basename(file_path))[0]
         data = []
-        matches = re.finditer(r"┌──\(kali[^\n]*\)\-[^\n]*\n", content_without_escape_codes)
+        matches = re.finditer(r"┌──[^\n]*\n", content_without_escape_codes)
         for match in matches:
-            working_directory = match.group().split("[")[1].split("]")[0]
-            timestamp = content_without_escape_codes[match.end():].split("\n")[0]
-            command = content_without_escape_codes[match.end():].split("\n")[1].split("$ ")[1]
+            try:
+                working_directory = match.group().split("[")[1].split("]")[0]
+            except IndexError:
+                working_directory = ""
+            try:
+                timestamp = content_without_escape_codes[match.end():].split("\n")[0]
+            except IndexError:
+                timestamp = ""
+            try:
+                command = content_without_escape_codes[match.end():].split("\n")[1].split("$ ")[1]
+            except IndexError:
+                command = ""
             output = []
             i = 2
             while i < len(content_without_escape_codes[match.end():].split("\n")) and not content_without_escape_codes[match.end():].split("\n")[i].startswith("┌──"):
