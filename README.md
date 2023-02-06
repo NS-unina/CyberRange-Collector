@@ -31,7 +31,6 @@ in modo tale da far ripartire la registrazione quando si digita `exit`.
 #!/bin/zsh
 
 if [ "$1" == "-start" ]; then
-echo "STOP_SCRIPT=0" > /etc/log_tool/tool_variable
 touch /tmp/script_running
 nohup zsh -c "while [ -f /tmp/script_running ]; do
 scrot -u -d 10 '%Y-%m-%d-%H:%M:%S.png'
