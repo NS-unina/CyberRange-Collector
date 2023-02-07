@@ -3,6 +3,8 @@ import json
 import shutil
 import os
 import base64
+import calendar
+import time
 
 # This function checks if the filename is either .png or .jpg
 def is_image_file(filename: str) -> bool:
@@ -31,7 +33,7 @@ def move_json_files(folder: str):
 
     # Search for files that end with "_JSON"
     for filename in os.listdir(folder):
-        if filename.endswith("_JSON"):
+        if filename.endswith(s_time_stamp):
             file_path = os.path.join(folder, filename)
             shutil.move(file_path, json_folder)
 
@@ -99,7 +101,10 @@ for file_path in log_files:
 
 # Combines the processed log data and the screenshots into a single dictionary
 data_fin = {"host": data, "screenshots": screenshots}
-json_filename = "host_JSON"
+current_GMT = time.gmtime()
+time_stamp = calendar.timegm(current_GMT)
+s_time_stamp = str(time_stamp)
+json_filename = "host_JSON"+s_time_stamp
 write_to_json(data_fin, log_folder, json_filename)
 
 move_json_files(log_folder)
