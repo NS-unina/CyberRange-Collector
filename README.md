@@ -7,11 +7,10 @@ Before running the tool you need to edit the *.zshrc* file by adding this code:
 ```shell
 if [[ -z "$SCRIPT_RUN" ]] && [ -f /tmp/script_running ]; then
 export SCRIPT_RUN=1
-script -f $tty >(while read; do date +"%T.%3N";echo -n "$REPLY";done >> /home/script_directory/session_$$.log)
+script -f $tty >(while read; do date +"%T.%3N";echo -n "$REPLY";done >> /home/script_directory/log/session_$$.log)
 fi
-trap 'nohup script -f >(while read;do date +"%T.%3N";echo "$REPLY";done >> /home/script_directory) 2>&1 & disown' EXIT
+trap 'nohup script -f >(while read;do date +"%T.%3N";echo "$REPLY";done >> /home/script_directory/log) 2>&1 & disown' EXIT
 ```
-Furthermore you have to go to the script directory and create two empty folders called *log* and *screen*.
 ### Start Logging
 To start logging you need to open a terminal session in the folder where the file *log_tool.sh* is and type
 ```shell
