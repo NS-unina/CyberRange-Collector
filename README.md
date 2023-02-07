@@ -3,6 +3,11 @@ This tool stores the input and output of all commands executed from each termina
 
 ## Getting Started
 ### Prerequisites
+You need to have: 
+* Scrot
+* Script
+* Python
+
 Before running the tool you need to edit the *.zshrc* file by adding this code:
 ```shell
 if [[ -z "$SCRIPT_RUN" ]] && [ -f /tmp/script_running ]; then
