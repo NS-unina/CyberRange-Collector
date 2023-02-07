@@ -1,72 +1,0 @@
-18:56:13.713
-Script started on 2023-02-05 18:56:13+01:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="-1" LINES="-1"]
-18:56:13.729
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-18:56:13.738
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004h[A[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-18:56:13.837
-└─[1m[32m[34m$[0m[34m[39m [A[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-18:56:22.667
-└─[1m[32m[34m$[0m[34m[39m ppython3 elab_JSON.py[?1l>[?2004l
-18:56:22.767
-Traceback (most recent call last):
-18:56:22.776
-File "/home/manuele/Documenti/script/elab_JSON.py", line 37, in <module>
-18:56:22.783
-for filename in os.listdir(screenshot_folder):
-18:56:22.790
-FileNotFoundError: [Errno 2] No such file or directory: '/home/kali/Documents/script'
-18:56:22.799
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-18:57:42.055
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-18:57:42.151
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:10:38.530
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:10:38.670
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:17:05.764
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:17:05.878
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:24:22.265
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:24:22.384
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:28:58.966
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:28:59.041
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:31:18.134
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:31:18.282
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:32:24.324
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:32:24.418
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:37:01.405
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:37:01.501
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:42:11.835
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:42:11.975
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:49:41.271
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:49:41.402
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
-19:50:53.993
-└─[1m[32m[34m$[0m[34m[39m [K[?1h=[?2004hpython3 elab_JSON.py[?1l>[?2004l
-19:50:54.107
-Traceback (most recent call last):
-19:50:54.125
-File "/home/manuele/Documenti/script/elab_JSON.py", line 63, in <module>
-19:50:54.138
-command = prova[match.end():].split("n")[1].split("$ ")[1]
-19:50:54.148
-IndexError: list index out of range
-19:50:54.156
-[0m[27m[24m[J[32m┌──([1m[32m[34mmanuele㉿kali[0m[34m[32m)-[[1m[32m[39m~/Documenti/script[0m[32m]
