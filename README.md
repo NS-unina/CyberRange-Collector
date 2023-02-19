@@ -1,5 +1,5 @@
 # CyberRange-Collector
-This tool stores the input and output of all commands executed from each terminal session of the virtual machine. It also collects screenshots taken each 10 seconds and it produces a JSON file as output which contains all those informations. 
+This tool stores the input and output of all commands executed from each terminal session of the virtual machine. It also collects screenshots taken each  second and it produces a JSON file as output which contains all those informations. 
 
 ## Getting Started
 ### Prerequisites
@@ -7,6 +7,7 @@ You need to have:
 * Scrot
 * Script
 * Python
+* xdotool
 
 Before running the tool you need to edit the *.zshrc* file by adding this code:
 ```shell
@@ -21,7 +22,7 @@ To start logging you need to open a terminal session in the folder where the fil
 ```shell
 source log_tool.sh -start
 ```
-From now on, all terminal sessions will be logged and screenshots will be taken every 10 seconds. 
+From now on, all terminal sessions will be logged and screenshots will be taken every 1 second. 
 ### Stop Logging
 When you type
 ```shell
