@@ -2,6 +2,16 @@
 
 if [ "$1" == "-start" ]; then
 touch /tmp/script_running
+if [ -d ./screen ];
+then
+else
+mkdir screen
+fi
+if [ -d ./log ];
+then
+else
+mkdir log
+fi
 nohup zsh -c "while [ -f /tmp/script_running ]; do
 source scrot_script.sh
 done" &
