@@ -10,6 +10,16 @@ import time
 def is_image_file(filename: str) -> bool:
     return filename.endswith(".png") or filename.endswith(".jpg")
 
+# This function removes the NonAscii characters
+def removeNonAscii(s): 
+    return "".join(i for i in s if ord(i)<126 and ord(i)>31)
+
+# This function can be used to remove extra timestamp inside the output
+def remove_timestamps(input_string):
+    timestamp_regex = r"\d{2}:\d{2}:\d{2}\.\d{3}"
+    output_string = re.sub(timestamp_regex, "", input_string)
+    return output_string
+
 # This function converts the contents of the image file at file_path to a base64 encoded string
 def convert_to_base64(file_path: str) -> str:
     with open(file_path, "rb") as image_file:
@@ -70,13 +80,13 @@ def process_log_file(file_path: str) -> dict:
             output = []
             i = 2
             while i < len(content_without_escape_codes[match.end():].split("\n")) and not content_without_escape_codes[match.end():].split("\n")[i].startswith("┌──"):
-                output.append(content_without_escape_codes[match.end():].split("\n")[i].rstrip())
+                output.append(remove_timestamps(removeNonAscii(content_without_escape_codes[match.end():].split("\n")[i].rstrip())))
                 i += 1
             data.append({
                 "working_directory": working_directory,
-                "timestamp": timestamp,
-                "command": command,
-                "output": "\n".join(output)
+                "timestamp": removeNonAscii(timestamp),
+                "command": removeNonAscii(command),
+                "output": "".join(output)
             })
     return {session_id: data}
 
