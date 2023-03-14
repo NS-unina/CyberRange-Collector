@@ -48,37 +48,18 @@ def move_json_files(folder: str):
             file_path = os.path.join(folder, filename)
             shutil.move(file_path, json_folder)
             
-# This function moves log files into a subfolder called "sessions"
-def move_session_files(folder: str):
+# This function moves screenshot files into a subfolder called "screen"
+def move_screen_files(folder: str):
     if not os.path.exists(folder):
         return
 
-    # Create a new folder named "sessions" if it doesn't exist
-    session_folder = os.path.join(folder, "sessions")
-    if not os.path.exists(session_folder):
-        os.mkdir(session_folder)
+    screen_folder = './screen'
 
     # Search for the session files
     for filename in os.listdir(folder):
-        if filename.endswith('.log'):
+        if filename.endswith('.png'):
             file_path = os.path.join(folder, filename)
-            shutil.move(file_path, session_folder)
-
-# This function moves command list files into a subfolder called "commands"
-def move_command_files(folder: str):
-    if not os.path.exists(folder):
-        return
-
-    # Create a new folder named "command" if it doesn't exist
-    command_folder = os.path.join(folder, "command")
-    if not os.path.exists(command_folder):
-        os.mkdir(command_folder)
-
-    # Search for the command list files
-    for filename in os.listdir(folder):
-        if filename.endswith('.txt'):
-            file_path = os.path.join(folder, filename)
-            shutil.move(file_path, command_folder)
+            shutil.move(file_path, screen_folder)
 
 # This function processes all valid files in the folder and returns their file paths as a list
 def process_folder(folder: str, is_valid_file: callable) -> list:
@@ -91,7 +72,6 @@ def process_folder(folder: str, is_valid_file: callable) -> list:
 
 # This function processes a log file and returns a dictionary containing information extracted from the file
 def process_log_file(command_path: str, log_path: str) -> dict:
-    #with open(file_path) as f:
     with open(command_path, "r") as cmd_f, open(log_path, "r") as log_f:
         logs = log_f.read()
         commands = cmd_f.readlines()
@@ -128,7 +108,7 @@ def process_log_file(command_path: str, log_path: str) -> dict:
             data.append({
                 "working_directory": working_directory,
                 "timestamp": removeNonAscii(timestamp),
-                "command": command,
+                "command": command[:-1],
                 "output": output
             })
     return {session_id: data}
@@ -165,6 +145,11 @@ def sort_files_by_number(files):
     
     return sorted(files, key=get_file_number)
 
+def delete_files_with_extensions(directory, extensions):
+    for filename in os.listdir(directory):
+        if filename.endswith(extensions):
+            os.remove(os.path.join(directory, filename))
+
 screenshot_folder = './'
 
 # Retrieves a list of screenshot files in the folder
@@ -182,8 +167,6 @@ log_files = sorted([os.path.join(log_folder, f) for f in files if f.endswith(".l
 command_list = sort_files_by_number(txt_files)
 log_list = sort_files_by_number(log_files)
 
-# elimino il primo elemento della lista dei log poiché corrisponde alla sessione vuota
-log_list.pop(0)
 
 # Stores the processed log data
 data = {}
@@ -201,5 +184,5 @@ json_filename = "JSON"+s_time_stamp+".JSON"
 write_to_json(data_fin, log_folder, json_filename)
 
 move_json_files(log_folder)
-move_session_files(log_folder)
-move_command_files(log_folder)
+delete_files_with_extensions(log_folder, ('.txt', '.log'))
+move_screen_files(screenshot_folder)
