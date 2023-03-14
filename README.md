@@ -9,13 +9,35 @@ You need to have:
 * Python
 * xdotool
 
-Before running the tool you need to edit the *.zshrc* file by adding this code:
+Before running the tool you need to edit the *.zshrc* file by adding this code (substituting */directory-of-the-tool/* with your tool directory):
 ```shell
+# Path of the counter file
+count_file=/tmp/.zsh_session_count
+
+# If the file does not exist then create a counter set to value 1
+if [[ ! -e $count_file ]] && [ -f /tmp/script_running ]; then
+  echo "1" > $count_file
+fi
+
+# Increment the counter at every new terminal session
+if [[ -f /tmp/script_running ]]; then
+  session_count=$(($(cat $count_file) + 1))
+  echo $session_count > $count_file
+fi
+
+# Code to run the script 
 if [[ -z "$SCRIPT_RUN" ]] && [ -f /tmp/script_running ]; then
 export SCRIPT_RUN=1
-script -f $tty >(while read; do date +"%T.%3N";echo -n "$REPLY";done >> /home/script_directory/log/session_$$.log)
+script -f $tty >(while read; do date +"%T.%3N";echo -n "$REPLY";done >> /directory-of-the-tool/logs/session_$session_count.log)
 fi
-trap 'nohup script -f >(while read;do date +"%T.%3N";echo "$REPLY";done >> /home/script_directory/log) 2>&1 & disown' EXIT
+trap 'nohup script -f >(while read;do date +"%T.%3N";echo "$REPLY";done >> /directory-of-the-tool/logs) 2>&1 & disown' EXIT
+
+# Hook which executes before every command 
+preexec() {
+    if [ -f /tmp/script_running ]; then
+        echo $1 >> /directory-of-the-tool/logs/command_list$session_count.txt
+    fi
+}
 ```
 ### Start Logging
 To start logging you need to open a terminal session in the folder where the file *log_tool.sh* is and type
