@@ -29,8 +29,8 @@ fi
 if [[ -z "$SCRIPT_RUN" ]] && [ -f /tmp/script_running ]; then
 export SCRIPT_RUN=1
 script -f $tty >(while read; do date +"%T.%3N";echo -n "$REPLY";done >> /directory-of-the-tool/logs/session_$session_count.log)
-fi
 trap 'nohup script -f >(while read;do date +"%T.%3N";echo "$REPLY";done >> /directory-of-the-tool/logs) 2>&1 & disown' EXIT
+fi
 
 # Hook which executes before every command 
 preexec() {
