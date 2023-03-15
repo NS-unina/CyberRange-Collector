@@ -30,7 +30,7 @@ def convert_to_base64(file_path: str) -> str:
 def remove_escape_codes(content: str) -> str:
     return re.sub(r'\x1B\[[0-?]*[ -/]*[@-~]', '', content)
 
-# This function moves all files in the folder that end with "_JSON" to a subfolder named "JSON"
+# This function moves all files in the folder that end with ".JSON" to a subfolder named "JSON"
 def move_json_files(folder: str):
     # Check if the folder exists
     if not os.path.exists(folder):
@@ -41,7 +41,7 @@ def move_json_files(folder: str):
     if not os.path.exists(json_folder):
         os.mkdir(json_folder)
 
-    # Search for files that end with "_JSON"
+    # Search for files that end with ".JSON"
     for filename in os.listdir(folder):
         #if filename.endswith(s_time_stamp):
         if filename.endswith('.JSON'):
@@ -97,12 +97,12 @@ def process_log_file(command_path: str, log_path: str) -> dict:
                 index=index+1
             except IndexError:
                 command = ""
-            output_dirty = []
+            dirty_out = []
             i = 2
             while i < len(content_without_escape_codes[match.end():].split("\n")) and not content_without_escape_codes[match.end():].split("\n")[i].startswith("┌──"):
-                output_dirty.append(remove_timestamps(removeNonAscii(content_without_escape_codes[match.end():].split("\n")[i].rstrip())))
+                dirty_out.append(remove_timestamps(removeNonAscii(content_without_escape_codes[match.end():].split("\n")[i].rstrip())))
                 i += 1
-            str_output="".join(output_dirty)
+            str_output="".join(dirty_out)
             output = re.sub(regex, '', str_output)
             data.append({
                 "working_directory": working_directory,
