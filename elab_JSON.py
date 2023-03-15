@@ -55,7 +55,7 @@ def move_screen_files(folder: str):
 
     screen_folder = './screen'
 
-    # Search for the session files
+    # Search for the screenshot files
     for filename in os.listdir(folder):
         if filename.endswith('.png'):
             file_path = os.path.join(folder, filename)
@@ -118,24 +118,19 @@ def write_to_json(data, folder, filename):
     with open(json_file_path, 'w', encoding='utf8') as json_file:
         json.dump(data, json_file, ensure_ascii=False)
 
-def get_number_from_filename(path):
-    filename = os.path.basename(path)
-    match = re.search(r'\d+', filename)
-    if match:
-        return int(match.group())
-    return 0
-    
+# This function sorts files by the number in the filename
 def sort_files_by_number(files):
     def get_file_number(file_path):
-        # Estrarre il numero dal nome del file utilizzando una regex
+        # Extract the number from the filename using a regex
         match = re.search(r'\d+', file_path)
         if match:
             return int(match.group())
         else:
-            return float('inf')  # Se non ci sono numeri nel nome del file, mettilo alla fine dell'ordinamento
+            return float('inf')  # If there are no numbers in the filename, put it at the end of the sort
     
     return sorted(files, key=get_file_number)
 
+# This function deletes files with a specific extension
 def delete_files_with_extensions(directory, extensions):
     for filename in os.listdir(directory):
         if filename.endswith(extensions):
@@ -143,21 +138,20 @@ def delete_files_with_extensions(directory, extensions):
 
 screenshot_folder = './'
 
-# Retrieves a list of screenshot files in the folder
+# Retrieves a list of screenshot files in the folder and convert them to base64
 screenshot_files = process_folder(screenshot_folder, is_image_file)
 screenshots = [convert_to_base64(file_path) for file_path in screenshot_files]
 
 log_folder = './logs'
 files = os.listdir(log_folder)
 
-# genero una lista di path di comandi e di log
+# Generate a list of path for commands and logs
 txt_files = sorted([os.path.join(log_folder, f) for f in files if f.endswith(".txt")])
 log_files = sorted([os.path.join(log_folder, f) for f in files if f.endswith(".log")])
 
-# ordino la lista di path di comandi e di log
+# Sort the two lists of commands and logs
 command_list = sort_files_by_number(txt_files)
 log_list = sort_files_by_number(log_files)
-
 
 # Stores the processed log data
 data = {}
@@ -172,6 +166,11 @@ s_time_stamp = str(time_stamp)
 json_filename = "JSON"+s_time_stamp+".JSON"
 write_to_json(data_fin, log_folder, json_filename)
 
+# Move the JSON file into a specific folder
 move_json_files(log_folder)
+
+# Delete logs and commands file
 delete_files_with_extensions(log_folder, ('.txt', '.log'))
+
+# Move screenshot files into a specific folder
 move_screen_files(screenshot_folder)
