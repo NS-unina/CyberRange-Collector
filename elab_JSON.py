@@ -117,14 +117,6 @@ def write_to_json(data, folder, filename):
     json_file_path = os.path.join(folder, filename)
     with open(json_file_path, 'w', encoding='utf8') as json_file:
         json.dump(data, json_file, ensure_ascii=False)
-        
-# Rimuove le chiavi alle quali è associata una lista vuota da un dizionario        
-def remove_empty_lists(d):
-    for k, v in list(d.items()):  # utilizziamo list() per creare una copia delle chiavi del dizionario
-        if isinstance(v, dict):
-            remove_empty_lists(v)
-        elif isinstance(v, list) and not v:
-            del d[k]
 
 def get_number_from_filename(path):
     filename = os.path.basename(path)
@@ -171,8 +163,6 @@ log_list = sort_files_by_number(log_files)
 data = {}
 for commands, logs in zip(command_list, log_list):
     data.update(process_log_file(commands, logs))
-    
-remove_empty_lists(data)
 
 # Combines the processed log data and the screenshots into a single dictionary
 data_fin = {"host": data, "screenshots": screenshots}
