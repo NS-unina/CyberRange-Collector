@@ -93,7 +93,6 @@ def process_log_file(command_path: str, log_path: str) -> dict:
             except IndexError:
                 timestamp = ""
             try:
-                scorri = content_without_escape_codes[match.end():].split("\n")[1].split("$ ")[1]
                 command = commands[index]
                 index=index+1
             except IndexError:
