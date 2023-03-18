@@ -8,6 +8,7 @@ You need to have:
 * Script
 * Python
 * xdotool
+* bc
 
 Before running the tool you need to edit the *.zshrc* file by adding this code (substituting */directory-of-the-tool/* with your tool directory):
 ```shell
