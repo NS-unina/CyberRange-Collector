@@ -1,0 +1,21 @@
+{"host": 
+    {"session_2": [
+        {"working_directory": "~/Desktop/CyberRange-Collector-main", 
+        "timestamp": "2023-03-09T12:36:35.964+00:00", 
+        "command": "echo sessione1_1", 
+        "output": "sessione1_1"}, 
+        {"working_directory": "~/Desktop/CyberRange-Collector-main", 
+        "timestamp": "2023-03-09T12:36:35.964+00:00", 
+        "command": "echo sessione1_2", 
+        "output": "sessione1_2"}], 
+    "session_4": [
+        {"working_directory": "~/Desktop/CyberRange-Collector-main", 
+        "timestamp": "2023-03-09T12:36:35.964+00:00", 
+        "command": "echo sessione2_1", 
+        "output": "sessione2_1"}, 
+        {"working_directory": "~/Desktop/CyberRange-Collector-main", 
+        "timestamp": "2023-03-09T12:36:35.964+00:00", 
+        "command": "echo sessione2_2", 
+        "output": "sessione2_2"}]
+    } 
+}
