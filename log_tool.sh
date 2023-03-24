@@ -56,6 +56,7 @@ elif [ "$1" == "-stop" ]; then
     rm /tmp/script_running
     rm /tmp/.zsh_session_count
     python elab_JSON.py
+    python api-call.py
 elif [ "$1" == "-help" ]; then
     echo "Usage: source log_tool.sh [option]"
     echo "Options:"

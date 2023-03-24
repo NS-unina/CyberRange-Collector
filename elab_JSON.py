@@ -31,24 +31,6 @@ def convert_to_base64(file_path: str) -> str:
 # This function removes escape codes from the input content string
 def remove_escape_codes(content: str) -> str:
     return re.sub(r'\x1B\[[0-?]*[ -/]*[@-~]', '', content)
-
-# This function moves all files in the folder that end with ".JSON" to a subfolder named "JSON"
-def move_json_files(folder: str):
-    # Check if the folder exists
-    if not os.path.exists(folder):
-        return
-
-    # Create a new folder named "JSON" if it doesn't exist
-    json_folder = os.path.join(folder, "JSON")
-    if not os.path.exists(json_folder):
-        os.mkdir(json_folder)
-
-    # Search for files that end with ".JSON"
-    for filename in os.listdir(folder):
-        #if filename.endswith(s_time_stamp):
-        if filename.endswith('.JSON'):
-            file_path = os.path.join(folder, filename)
-            shutil.move(file_path, json_folder)
             
 # This function moves screenshot files into a subfolder called "screen"
 def move_screen_files(folder: str):
@@ -174,9 +156,6 @@ time_stamp = calendar.timegm(current_GMT)
 s_time_stamp = str(time_stamp)
 json_filename = "JSON"+s_time_stamp+".JSON"
 write_to_json(data_fin, log_folder, json_filename)
-
-# Move the JSON file into a specific folder
-move_json_files(log_folder)
 
 # Delete logs and commands file
 delete_files_with_extensions(log_folder, ('.txt', '.log'))
