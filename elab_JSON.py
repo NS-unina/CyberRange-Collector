@@ -5,6 +5,8 @@ import os
 import base64
 import calendar
 import time
+import pytz
+from datetime import datetime
 
 # This function checks if the filename is either .png or .jpg
 def is_image_file(filename: str) -> bool:
@@ -88,6 +90,13 @@ def process_log_file(command_path: str, log_path: str) -> dict:
                 working_directory = ""
             try:
                 timestamp = content_without_escape_codes[match.end():].split("\n")[0]
+                tmp = removeNonAscii(timestamp)
+                now = datetime.now()
+                correct_date = now.date()
+                time_obj = datetime.combine(correct_date, datetime.strptime(tmp, '%H:%M:%S.%f').time())
+                timezone = pytz.utc
+                localized_time_obj = timezone.localize(time_obj)
+                iso_time = localized_time_obj.isoformat()
                 if (timestamp == ""):
                     continue
             except IndexError:
@@ -106,7 +115,7 @@ def process_log_file(command_path: str, log_path: str) -> dict:
             output = re.sub(regex, '', str_output)
             data.append({
                 "working_directory": working_directory,
-                "timestamp": removeNonAscii(timestamp),
+                "timestamp": iso_time,
                 "command": command[:-1],
                 "output": output
             })
@@ -159,7 +168,7 @@ for commands, logs in zip(command_list, log_list):
     data.update(process_log_file(commands, logs))
 
 # Combines the processed log data and the screenshots into a single dictionary
-data_fin = {"host": data, "screenshots": screenshots}
+data_fin = {"host": data}#, "screenshots": screenshots}
 current_GMT = time.gmtime()
 time_stamp = calendar.timegm(current_GMT)
 s_time_stamp = str(time_stamp)
