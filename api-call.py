@@ -51,29 +51,34 @@ for session_name, session_items in session_data.items():
         output.append(item['output'])
 
 # Dati della richiesta HTTPS
-url = "https://localhost:9200/_bulk"
+url = "http://localhost:9000/openSearch/bulk"
 headers = {
-  'Authorization': 'Basic YWRtaW46YWRtaW4=',
+  'Authorization': 'Bearer ',
   'Content-Type': 'application/json'
 }
 
-payload = ""
+payload = []
+host = str(random.randint(1,1000))
 for index in range(len(session)):
-    first = "{ \"create\": { \"_index\": \"command\", \"_id\": \"" + str(random.randint(10000, 99999)) + "\" } }\n"
-    payload += first 
-    host_str = "{ \"host_id\": \"" + str(random.randint(1,1000)) + "\","
-    session_str =  "\"session_id\": \"" + str(session[index]) + "\"," 
-    directory_str = "\"working_directory\": \"" + str(directory[index]) + "\","
-    timestamp_str = "\"timestamp\": \"" + str(timestamp[index]) + "\"," 
-    command_str = "\"command\": \"" + str(command[index]) + "\","
-    output_str = "\"output\": \"" + str(output[index]) + "\" }\n"
-    second = host_str + session_str + directory_str + timestamp_str + command_str + output_str
-    payload += second
+    first = {"_index": "command" , "_id" : str(random.randint(10000, 99999))}
+    payload.append({
+        "create" : first
+    })
+    second = {
+        "host_id": host, 
+        "session_id" : str(session[index]), 
+        "working_directory": str(directory[index]), 
+        "timestamp": str(timestamp[index]),
+        "command": str(command[index]),
+        "output": str(output[index])
+        }
+    payload.append(second)
 
-print(payload)
+#print(payload)
+send = json.dumps(payload)
 
-#response = requests.request("POST", url, headers=headers, data=payload, verify=False)
+response = requests.request("POST", url, headers=headers, data=send)
 
-#print(response.text)
+print(response.text)
 
 move_json_files(log_folder)
