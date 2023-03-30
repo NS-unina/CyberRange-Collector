@@ -1,8 +1,6 @@
-import requests
-import json
-import random
-import shutil
-import os
+import requests, json, random, shutil, os, re
+import imageio.v2 as imageio
+
 
 # This function moves all files in the folder that end with ".JSON" to a subfolder named "JSON"
 def move_json_files(folder: str):
@@ -34,14 +32,24 @@ for session_name, session_items in data['host'].items():
         item['session_name'] = session_name
         session_data.setdefault(session_name, []).append(item)
 
-# Scorro il dizionario per generarmi le liste di informazioni
+# function to extract the timestamp value from the file name
+def get_timestamp(value):
+    match = re.search(regex, value)
+    if match:
+        date_string = match.group()
+        return(date_string)
+
+# timestamp to find into the name string of the file
+regex = r"\d{4}-\d{2}-\d{2}-\d{2}:\d{2}:\d{2}"
+
+# information lists
 session = []
 directory = []
 timestamp = []
 command = []
 output = []
 
-
+# fill the lists with information from the dictionary
 for session_name, session_items in session_data.items():
     for item in session_items:
         session.append(session_name)
@@ -50,10 +58,10 @@ for session_name, session_items in session_data.items():
         command.append(item['command'])
         output.append(item['output'])
 
-# Dati della richiesta HTTPS
-url = "http://localhost:9000/openSearch/bulk"
+# http request data
+url_bulk = "http://localhost:9000/openSearch/bulk"
 headers = {
-  'Authorization': 'Bearer ',
+  'Authorization': 'Bearer 30e16f01ffc18fbc019eaac098628cdcd3b596f43bcd5937958842f77a8d4fa5',
   'Content-Type': 'application/json'
 }
 
@@ -77,8 +85,40 @@ for index in range(len(session)):
 #print(payload)
 send = json.dumps(payload)
 
-response = requests.request("POST", url, headers=headers, data=send)
+response = requests.request("POST", url_bulk, headers=headers, data=send)
 
 print(response.text)
 
 move_json_files(log_folder)
+
+url_gif = f"http://localhost:9000/images/upload/{host}"
+folder_path = "./screen" # specificare il percorso della cartella contenente i file
+
+images = [img for img in os.listdir(folder_path) if img.endswith('.png')]
+gif_file = f'./screen/{host}.gif'
+
+with imageio.get_writer(gif_file, mode='I', duration=0.5) as writer:
+    for image_name in sorted(images, key = get_timestamp):
+        image_path = os.path.join(folder_path, image_name)
+        image = imageio.imread(image_path)
+        writer.append_data(image)
+    
+
+files = {}
+for filename in os.listdir(folder_path):
+    file_path = os.path.join(folder_path, filename)
+    if os.path.isfile(file_path):
+        files[filename] = open(file_path, "rb")
+
+headers = {
+  'Authorization': 'Bearer 30e16f01ffc18fbc019eaac098628cdcd3b596f43bcd5937958842f77a8d4fa5',
+}
+
+response = requests.post(url_gif, headers=headers, files=files)
+
+json = response.json()
+print(json)
+
+# chiudiamo tutti i file aperti
+for file in files.values():
+    file.close()
