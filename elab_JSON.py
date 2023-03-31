@@ -133,7 +133,8 @@ screenshot_folder = './'
 screenshot_files = process_folder(screenshot_folder, is_image_file)
 screenshots = [convert_to_base64(file_path) for file_path in screenshot_files]
 
-log_folder = './logs'
+log_folder = '/tmp/log-collector'
+json_folder = './logs'
 files = os.listdir(log_folder)
 
 # Generate a list of path for commands and logs
@@ -155,7 +156,7 @@ current_GMT = time.gmtime()
 time_stamp = calendar.timegm(current_GMT)
 s_time_stamp = str(time_stamp)
 json_filename = "JSON"+s_time_stamp+".JSON"
-write_to_json(data_fin, log_folder, json_filename)
+write_to_json(data_fin, json_folder, json_filename)
 
 # Delete logs and commands file
 delete_files_with_extensions(log_folder, ('.txt', '.log'))
