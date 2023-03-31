@@ -28,10 +28,8 @@ if [ "$1" == "-start" ]; then
             echo "Start collecting screenshots with rate: $3 screen/sec"
             export screen_rate=$(echo "scale=2; 1/$3" | bc) #sudo apt install bc
             nohup zsh -c "while [ -f /tmp/script_running ]; do
-            scrot -u $(xdotool getactivewindow getwindowname | tr -d '/"\\:*?<>|~' | sed 's/ //g')_%Y-%m-%d-%H:%M:%S.png
-            date
-            sleep $screen_rate
-            done" &
+    	source scrot_script.sh $screen_rate
+    	done" &
         else
             # Error output: missing params
             echo "You need to specify a valid rate argument"
@@ -41,12 +39,9 @@ if [ "$1" == "-start" ]; then
     	# It starts without screenshots
     elif [ "$2" == "" ]; then
     	# Starting with a default rate
-    	#nohup zsh -c "while [ -f /tmp/script_running ]; do
-    	#source scrot_script.sh
-    	#done" &
     	nohup zsh -c "while [ -f /tmp/script_running ]; do
-    	scrot -u -d 1 $(xdotool getactivewindow getwindowname | tr -d '/"\\:*?<>|~' | sed 's/ //g')_%Y-%m-%d-%H:%M:%S.png
-	done" &
+    	source scrot_script.sh 1
+    	done" &
     else
     	# Error: invalid option
     	echo "You need to specify a valid option"

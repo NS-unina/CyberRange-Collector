@@ -1,2 +1,3 @@
 #!/bin/bash
-scrot -u -d 1 $(xdotool getactivewindow getwindowname | tr -d '/"\\:*?<>|~' | sed 's/ //g')_%Y-%m-%d-%H:%M:%S.png
+sleep $1
+scrot -u "$(xdotool getactivewindow getwindowname | tr -d '/"\\:*?<>|~' | sed 's/ //g')_$(date '+%Y-%m-%d-%H:%M:%S.%3N').png"
