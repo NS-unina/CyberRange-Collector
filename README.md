@@ -25,11 +25,13 @@ To start logging you need to open a terminal session in the folder where the fil
 source log_tool.sh -start
 ```
 From now on, all terminal sessions will be logged and screenshots will be taken every 1 second. 
+
 If you want to log terminal sessions with another screenshot rate you have to type:
 ```shell
 source log_tool.sh -start -rate 10
 ```
 From now on, all terminal sessions will be logged and screenshots will be taken with a rate of 10 screenshots/second.
+
 If you don't want to take screenshots you have to type:
 ```shell
 source log_tool.sh -start -noscreen
