@@ -26,7 +26,7 @@ if [ "$1" == "-start" ]; then
     if [ "$2" == "-rate" ]; then
     	if [ "$3" != "" ]; then
             echo "Start collecting screenshots with rate: $3 screen/sec"
-            export screen_rate=$(echo "scale=2; 1/$3" | bc) #sudo apt install bc
+            export screen_rate=$(echo "scale=2; 1/$3" | bc)
             nohup zsh -c "while [ -f /tmp/script_running ]; do
     	source scrot_script.sh $screen_rate
     	done" &
@@ -61,5 +61,5 @@ elif [ "$1" == "-help" ]; then
     echo "    -rate x: take x screenshots/seconds"
     echo "    -help: display this help message"
 else
-    echo "Nessuna opzione fornita"
+    echo "No opt"
 fi
