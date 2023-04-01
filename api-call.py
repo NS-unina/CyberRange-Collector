@@ -1,6 +1,6 @@
 import requests, json, random, shutil, os, re
 import imageio.v2 as imageio
-
+from dotenv import load_dotenv
 
 # This function moves all files in the folder that end with ".JSON" to a subfolder named "JSON"
 def move_json_files(folder: str):
@@ -59,9 +59,14 @@ for session_name, session_items in session_data.items():
         output.append(item['output'])
 
 # http request data
-url_bulk = "http://localhost:9000/openSearch/bulk"
+load_dotenv()
+apiURL = os.getenv('APIURL')
+apiPORT = os.getenv('APIPORT')
+bearer = os.getenv('BEARER')
+
+url_bulk = f"{apiURL}:{apiPORT}/openSearch/bulk"
 headers = {
-  'Authorization': 'Bearer 30e16f01ffc18fbc019eaac098628cdcd3b596f43bcd5937958842f77a8d4fa5',
+  'Authorization': 'Bearer {}'.format(bearer),
   'Content-Type': 'application/json'
 }
 
@@ -82,7 +87,6 @@ for index in range(len(session)):
         }
     payload.append(second)
 
-#print(payload)
 send = json.dumps(payload)
 
 response = requests.request("POST", url_bulk, headers=headers, data=send)
@@ -91,8 +95,8 @@ print(response.text)
 
 move_json_files(log_folder)
 
-url_gif = f"http://localhost:9000/images/upload/{host}"
-folder_path = "./screen" # specificare il percorso della cartella contenente i file
+url_gif = f"{apiURL}:{apiPORT}/images/upload/{host}"
+folder_path = "./screen"
 
 images = [img for img in os.listdir(folder_path) if img.endswith('.png')]
 gif_file = f'./screen/{host}.gif'
@@ -111,7 +115,7 @@ for filename in os.listdir(folder_path):
         files[filename] = open(file_path, "rb")
 
 headers = {
-  'Authorization': 'Bearer 30e16f01ffc18fbc019eaac098628cdcd3b596f43bcd5937958842f77a8d4fa5',
+    'Authorization': 'Bearer {}'.format(bearer),
 }
 
 response = requests.post(url_gif, headers=headers, files=files)
