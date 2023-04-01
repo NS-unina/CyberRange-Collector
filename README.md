@@ -34,6 +34,10 @@ If you don't want to take screenshots you have to type:
 ```shell
 source log_tool.sh -start -noscreen
 ```
+The help option is given if you type:
+```shell
+source log_tool.sh -help
+```
 ### Stop Logging
 When you type
 ```shell
