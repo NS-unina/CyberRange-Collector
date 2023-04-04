@@ -10,3 +10,8 @@ build/
 log/
 screen/
 inst
+
+server/backend/node_modules/
+server/backend/package-lock.json
+server/backend/routes/uploads/
+
