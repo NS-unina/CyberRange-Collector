@@ -15,10 +15,6 @@ You need to have:
 * xdotool
 * bc
 
-Before running the tool you need to edit the *.zshrc* file by adding this code (substituting */directory-of-the-tool/* with your tool directory):
-```shell
-source /directory-of-the-tool/CyberRange-Collector/config/script-log.sh
-```
 ### Start Logging
 To start logging you need to open a terminal session in the folder where the file *log_tool.sh* is and type
 ```shell

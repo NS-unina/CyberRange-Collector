@@ -2,6 +2,12 @@
 
 if [ "$1" == "-start" ]; then
     rm ./*.png
+    # Added configuration to file .zshrc
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+    if grep -q "source $SCRIPT_DIR/inst/script-log.sh" ~/.zshrc; then
+    else
+    echo "source $SCRIPT_DIR/inst/script-log.sh" >> ~/.zshrc
+    fi
     touch /tmp/script_running
     
     # Directory creation
