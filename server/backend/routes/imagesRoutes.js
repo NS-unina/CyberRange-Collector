@@ -1,7 +1,6 @@
 import {Router} from 'express';
 import fileUpload from 'express-fileupload';
 import fileExtLimiter from '../middleware/fileExtLimiter.js';
-//import fileSizeLimiter from '../middleware/fileSizeLimiter.js';
 import filesPayloadExists from '../middleware/filesPayloadExists.js';
 import {createImage, getGif, getImagesName, deleteImages, getSingleImage, getFolderNames} from './handlers/imageHandlers.js';
 import passport from 'passport';
@@ -27,7 +26,6 @@ router.post('/upload/:host',
     fileUpload({ createParentPath: true}),
     filesPayloadExists,
     fileExtLimiter(['.png','.jpg','.jpeg','.gif']),
-    //fileSizeLimiter,
     createImage
 )
 

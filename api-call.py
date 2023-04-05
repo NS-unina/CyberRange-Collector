@@ -18,7 +18,6 @@ def move_json_files(folder: str):
             file_path = os.path.join(folder, filename)
             shutil.move(file_path, json_folder)
 
-# Prelevo i dati dal file JSON (generalizzare su tutti i file JSON o su un file JSON generico) e creo un dizionario con tali dati
 log_folder = './logs'
 for filename in os.listdir(log_folder):
     if filename.endswith('.JSON'):
@@ -123,6 +122,5 @@ response = requests.post(url_gif, headers=headers, files=files)
 json = response.json()
 print(json)
 
-# chiudiamo tutti i file aperti
 for file in files.values():
     file.close()

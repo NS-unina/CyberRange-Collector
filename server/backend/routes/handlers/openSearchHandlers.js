@@ -25,13 +25,13 @@ const postBulk = (req,res) => {
 
     proxyRes.on('end', () => {
       const jsonData = JSON.parse(data);
-      res.json(jsonData); // Invia la risposta JSON al client
+      res.json(jsonData); 
     });
   });
 
   proxyReq.on('error', (error) => {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' }); // Invia una risposta di errore al client
+    res.status(500).json({ error: 'Internal server error' });
   });
 
   proxyReq.write(dataToSend);
@@ -63,13 +63,13 @@ const getCSV = (req,res) => {
 
     proxyRes.on('end', () => {
       const jsonData = JSON.parse(data);
-      res.json(jsonData); // Invia la risposta JSON al client
+      res.json(jsonData); 
     });
   });
 
   proxyReq.on('error', (error) => {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' }); // Invia una risposta di errore al client
+    res.status(500).json({ error: 'Internal server error' }); 
   });
 
   proxyReq.end();

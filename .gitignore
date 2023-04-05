@@ -15,3 +15,5 @@ server/backend/node_modules/
 server/backend/package-lock.json
 server/backend/routes/uploads/
 
+server/client/node_modules/
+server/client/package-lock.json
