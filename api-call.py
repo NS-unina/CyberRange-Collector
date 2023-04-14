@@ -82,7 +82,8 @@ for index in range(len(session)):
         "working_directory": str(directory[index]), 
         "timestamp": str(timestamp[index]),
         "command": str(command[index]),
-        "output": str(output[index])
+        "output": str(output[index]),
+        "see_more": f"{apiURL}:3000/?timestamp={str(timestamp[index])}&host={host}"
         }
     payload.append(second)
 

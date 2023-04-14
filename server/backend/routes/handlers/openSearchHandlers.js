@@ -76,5 +76,8 @@ const getCSV = (req,res) => {
 
 }
 
+const checkIndex = (req,res) => {
+  
+}
 
-export {postBulk, getCSV}
+export {postBulk, getCSV, checkIndex}
