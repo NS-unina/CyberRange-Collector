@@ -72,6 +72,8 @@ def process_log_file(command_path: str, log_path: str) -> dict:
                 working_directory = ""
             try:
                 timestamp = content_without_escape_codes[match.end():].split("\n")[0]
+                if (timestamp == ""):
+                    continue
                 tmp = removeNonAscii(timestamp)
                 now = datetime.now()
                 correct_date = now.date()
@@ -79,8 +81,7 @@ def process_log_file(command_path: str, log_path: str) -> dict:
                 timezone = pytz.utc
                 localized_time_obj = timezone.localize(time_obj)
                 iso_time = localized_time_obj.isoformat()
-                if (timestamp == ""):
-                    continue
+                
             except IndexError:
                 timestamp = ""
             try:
