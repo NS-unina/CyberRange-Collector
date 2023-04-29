@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 function splitFileName(fileName) {
-    const regex = /^(.*?)_(\d{4}-\d{2}-\d{2}-\d{2}:\d{2}:\d{2})\.(\w+)$/;
+    const regex = /^(.*?)_(\d{4}-\d{2}-\d{2}-\d{2}:\d{2}:\d{2}.\d{3}).(\w+)$/;
     const match = fileName.match(regex);
     if (match) {
       const name = match[1];

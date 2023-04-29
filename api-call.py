@@ -39,7 +39,7 @@ def get_timestamp(value):
         return(date_string)
 
 # timestamp to find into the name string of the file
-regex = r"\d{4}-\d{2}-\d{2}-\d{2}:\d{2}:\d{2}"
+regex = r"\d{4}-\d{2}-\d{2}-\d{2}:\d{2}:\d{2}\.\d{3}"
 
 # information lists
 session = []
@@ -72,6 +72,7 @@ headers = {
 payload = []
 host = str(random.randint(1,1000))
 for index in range(len(session)):
+    new_timestamp = str(timestamp[index])[:-9]
     first = {"_index": "command" , "_id" : str(random.randint(10000, 99999))}
     payload.append({
         "create" : first
@@ -83,7 +84,7 @@ for index in range(len(session)):
         "timestamp": str(timestamp[index]),
         "command": str(command[index]),
         "output": str(output[index]),
-        "see_more": f"{apiURL}:3000/?timestamp={str(timestamp[index])}&host={host}"
+        "see_more": f"{apiURL}:3000/?timestamp={new_timestamp}&host={host}"
         }
     payload.append(second)
 
