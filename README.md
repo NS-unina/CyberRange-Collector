@@ -22,6 +22,7 @@ In order to run the server:
 On kali distro: 
 ```
 sudo apt install -y docker.io docker-compose
+
 # If you want your user to let use docker
 sudo usermod -aG docker $USER
 sudo systemctl enable docker --now
@@ -33,9 +34,22 @@ To start the server that will store the data, you have to go to the server direc
 cd server
 docker-compose up
 ```
+---
+**NOTE**
+Before run the server, increase the `vm.map.size` parameter: 
+```
+sysctl -w vm.max_map_count=262144
+```
+You can put permanently by adding 
+```
+vm.max_map_count=262144
+```
+in the `/etc/sysctl.conf` file.
+---
 
 
-This will start three services:
+
+The compose will start three services:
 * Opensearch instance
 * Backend instance
 * Client instance
@@ -66,7 +80,9 @@ When you type
 ```shell
 source log_tool.sh -stop
 ```
-The tool stops logging and starts to elaborate the informations stored. It produces a JSON file which contains an entry for all terminal session started, with command input, output, working directory and timestamp, like this:
+The tool stops logging and starts to elaborate the stored informations.
+It takes all the logs stored in the `/tmp/log-collector` folder and generate JSON file which contains an entry for all terminal session started, with command input, output, working directory and timestamp, like this:
+
 ```JSON
 {"host": 
 {"session_name": 
@@ -80,10 +96,22 @@ The tool stops logging and starts to elaborate the informations stored. It produ
 ```
 You can find this JSON file at this path: `/../CyberRange-Collector/logs/`.
 
+### Upload data 
+To upload data run: 
+```
+source log_tool.sh -upload
+```
+
+It will upload data in the server. Data can be visualized by the OpenSearch Dashboard. 
+
+The forma of generated indexes is as follows: 
+- `command`
+
 ### Data Visualization
 At this point, you can reach OpenSearch Dashboards where you will find all the session logs collected. Each command has a link to the web app which shows a gif representative of the session captured. Inside the web app, you can also download a .csv file containing all the informations.
 
 ### Authors
 * Marco Longobardi
 * Manuele Toscano
+* Gaetano Perrone
 

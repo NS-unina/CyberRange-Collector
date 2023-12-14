@@ -1,6 +1,10 @@
 import requests, json, random, shutil, os, re
 import imageio.v2 as imageio
 from dotenv import load_dotenv
+import sys
+
+def log(m):
+    print("[+] {}".format(m))
 
 # This function moves all files in the folder that end with ".JSON" to a subfolder named "JSON"
 def move_json_files(folder: str):
@@ -94,11 +98,11 @@ if __name__ == '__main__':
             }
         payload.append(second)
 
+    log("Upload terminal commands")
     send = json.dumps(payload)
-
     response = requests.request("POST", url_bulk, headers=headers, data=send)
 
-    print(response.text)
+    log(response.text)
 
     move_json_files(log_folder)
 
@@ -125,6 +129,7 @@ if __name__ == '__main__':
         'Authorization': 'Bearer {}'.format(bearer),
     }
 
+    log("Upload images")
     response = requests.post(url_gif, headers=headers, files=files)
 
     json = response.json()
