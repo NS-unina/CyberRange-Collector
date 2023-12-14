@@ -9,19 +9,32 @@ pip install -r requirements.txt
 ```
 
 You need to have: 
-* Scrot
+* Scrot (sudo apt-get install -y scrot)
 * Script
 * Python
 * xdotool
 * bc
+
+In order to run the server:
 * docker
 * docker-compose
+
+On kali distro: 
+```
+sudo apt install -y docker.io docker-compose
+# If you want your user to let use docker
+sudo usermod -aG docker $USER
+sudo systemctl enable docker --now
+```
 
 ### Starting Server
 To start the server that will store the data, you have to go to the server directory inside the project directory and type:
 ```shell
+cd server
 docker-compose up
 ```
+
+
 This will start three services:
 * Opensearch instance
 * Backend instance

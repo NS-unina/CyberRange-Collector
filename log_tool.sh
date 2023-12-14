@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 if [ "$1" == "-start" ]; then
-    rm ./*.png
+    rm  -f ./*.png
     # Added configuration to file .zshrc
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
     if grep -q "source $SCRIPT_DIR/config/script-log.sh" ~/.zshrc; then
@@ -54,10 +54,13 @@ if [ "$1" == "-start" ]; then
         source log_tool.sh -stop
     fi
 elif [ "$1" == "-stop" ]; then
-    rm /tmp/script_running
-    rm /tmp/.zsh_session_count
+    rm -f /tmp/script_running
+    rm -f /tmp/.zsh_session_count
     python elab_JSON.py
+
+elif [ "$1" == "-upload" ]; then
     python api-call.py
+
 elif [ "$1" == "-help" ]; then
     echo "Usage: source log_tool.sh [option]"
     echo "Options:"
