@@ -3,25 +3,13 @@ services:
   mongodb:
     container_name: mongodb-server
     image: mongo
+    ports:
+      - '27017:27017'
     volumes:
       - collector-tool:/data/db
     networks:
       - backend-net
 
-  express:
-    container_name: express-server
-    image: cyber-collector-server
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    depends_on:
-      - mongodb
-    ports:
-      - "9000:9000"
-    env_file:
-      - ./backend/.env
-    networks:
-      - backend-net
     
   client:
     container_name: react-web-app

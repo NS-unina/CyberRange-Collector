@@ -1,6 +1,6 @@
 import http from 'http';
 
-const createIndexPattern = (req,res,next) => {
+const bulkCreateIndexPattern = (req,res,next) => {
     const statusCode = req.dataIfIndexCreated
     if(statusCode == 200){
         const dataToSend = JSON.stringify({
@@ -17,7 +17,7 @@ const createIndexPattern = (req,res,next) => {
             path: `/api/saved_objects/index-pattern/command`,
             rejectUnauthorized: false,
             headers: {
-                'Authorization': 'Basic YWRtaW46YWRtaW4=',
+                'Authorization': `Basic ${getCreds()}`,
                 'Content-Type': 'application/json',
                 'osd-xsrf': 'true',
                 'securitytenant': 'global'
@@ -49,4 +49,4 @@ const createIndexPattern = (req,res,next) => {
     
 }
 
-export default createIndexPattern
+export default bulkCreateIndexPattern

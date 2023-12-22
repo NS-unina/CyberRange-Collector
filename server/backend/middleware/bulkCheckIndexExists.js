@@ -1,14 +1,17 @@
 import https from 'https';
+import { getOSHost } from '../utils/env.js';
 
-const checkIndexExists = (req,res,next) => {
+
+const bulkCheckIndexExists = (req, res, next) => {
+    
     const options = {
         method: 'HEAD',
-        hostname: 'opensearch-node1',
+        hostname: getOSHost(),
         port: 9200,
         path: `/command`,
         rejectUnauthorized: false,
         headers: {
-            'Authorization': 'Basic YWRtaW46YWRtaW4=',
+            'Authorization': `Basic ${getCreds()}`,
             'Content-Type': 'application/json'
           }
       };
@@ -33,4 +36,4 @@ const checkIndexExists = (req,res,next) => {
     
 }
 
-export default checkIndexExists
+export default bulkCheckIndexExists

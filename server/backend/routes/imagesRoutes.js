@@ -4,7 +4,7 @@ import fileExtLimiter from '../middleware/fileExtLimiter.js';
 import filesPayloadExists from '../middleware/filesPayloadExists.js';
 import {createImage, getGif, getImagesName, deleteImages, getSingleImage, getFolderNames} from './handlers/imageHandlers.js';
 import passport from 'passport';
-import { registerStrategy } from '../config/passport-config.js'
+import { registerStrategy } from '../utils/passport-config.js'
 
 
 const router = Router();

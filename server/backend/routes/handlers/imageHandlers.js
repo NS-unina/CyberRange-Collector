@@ -25,7 +25,7 @@ const createImage = async (req,res) => {
     const files = req.files
     const {host} = req.params
     if(!host){
-        return res.status(400).json('Host not found')
+        return res.status(400).json('Host required')
     }
     Object.keys(files).forEach(async key => {
         const filepath = path.join(__dirname, '/../uploads', host, files[key].name)

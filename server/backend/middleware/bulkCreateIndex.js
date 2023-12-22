@@ -1,6 +1,7 @@
 import https from 'https';
+import { getOSHost, getCreds} from '../utils/env.js';
 
-const createIndex = (req,res,next) => {
+const bulkCreateIndex = (req,res,next) => {
     const statusCode = req.dataIfIndexExists
     if(statusCode == 200){
         next()
@@ -42,12 +43,12 @@ const createIndex = (req,res,next) => {
           })
         const options = {
             method: 'PUT',
-            hostname: 'opensearch-node1',
+            hostname: getOSHost(),
             port: 9200,
             path: `/command`,
             rejectUnauthorized: false,
             headers: {
-                'Authorization': 'Basic YWRtaW46YWRtaW4=',
+                'Authorization': `Basic ${getCreds()}`,
                 'Content-Type': 'application/json'
               }
           };
@@ -75,4 +76,4 @@ const createIndex = (req,res,next) => {
     
 }
 
-export default createIndex
+export default bulkCreateIndex
