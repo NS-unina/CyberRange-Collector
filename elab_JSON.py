@@ -8,6 +8,12 @@ import time
 import pytz
 from datetime import datetime
 
+def is_valid_timestamp(tmp):
+    """
+    Returns true if it is a valid timestamp in the form 10:29:11.734 (12 chars)
+    """
+    return len(tmp) == 12
+
 # This function checks if the filename is either .png or .jpg
 def is_image_file(filename: str) -> bool:
     return filename.endswith(".png") or filename.endswith(".jpg")
@@ -77,10 +83,14 @@ def process_log_file(command_path: str, log_path: str) -> dict:
                 tmp = removeNonAscii(timestamp)
                 now = datetime.now()
                 correct_date = now.date()
-                time_obj = datetime.combine(correct_date, datetime.strptime(tmp, '%H:%M:%S.%f').time())
-                timezone = pytz.utc
-                localized_time_obj = timezone.localize(time_obj)
-                iso_time = localized_time_obj.isoformat()
+                if is_valid_timestamp(tmp):
+                    time_obj = datetime.combine(correct_date, datetime.strptime(tmp, '%H:%M:%S.%f').time())
+                    timezone = pytz.utc
+                    localized_time_obj = timezone.localize(time_obj)
+                    iso_time = localized_time_obj.isoformat()
+                else:
+                    print("[-] not valid iso_time, will skip")
+                    iso_time = None
                 
             except IndexError:
                 timestamp = ""
@@ -96,12 +106,13 @@ def process_log_file(command_path: str, log_path: str) -> dict:
                 i += 1
             str_output="".join(dirty_out)
             output = re.sub(regex, '', str_output)
-            data.append({
-                "working_directory": working_directory,
-                "timestamp": iso_time,
-                "command": command[:-1],
-                "output": output
-            })
+            if iso_time:
+                data.append({
+                    "working_directory": working_directory,
+                    "timestamp": iso_time,
+                    "command": command[:-1],
+                    "output": output
+                })
     return {session_id: data}
 
 # Writes the given data to a JSON file in the specified folder
@@ -128,39 +139,40 @@ def delete_files_with_extensions(directory, extensions):
         if filename.endswith(extensions):
             os.remove(os.path.join(directory, filename))
 
-screenshot_folder = './'
+if __name__ == '__main__':
+    screenshot_folder = './'
 
-# Retrieves a list of screenshot files in the folder and convert them to base64
-screenshot_files = process_folder(screenshot_folder, is_image_file)
-screenshots = [convert_to_base64(file_path) for file_path in screenshot_files]
+    # Retrieves a list of screenshot files in the folder and convert them to base64
+    screenshot_files = process_folder(screenshot_folder, is_image_file)
+    screenshots = [convert_to_base64(file_path) for file_path in screenshot_files]
 
-log_folder = '/tmp/log-collector'
-json_folder = './logs'
-files = os.listdir(log_folder)
+    log_folder = '/tmp/log-collector'
+    json_folder = './logs'
+    files = os.listdir(log_folder)
 
-# Generate a list of path for commands and logs
-txt_files = sorted([os.path.join(log_folder, f) for f in files if f.endswith(".txt")])
-log_files = sorted([os.path.join(log_folder, f) for f in files if f.endswith(".log")])
+    # Generate a list of path for commands and logs
+    txt_files = sorted([os.path.join(log_folder, f) for f in files if f.endswith(".txt")])
+    log_files = sorted([os.path.join(log_folder, f) for f in files if f.endswith(".log")])
 
-# Sort the two lists of commands and logs
-command_list = sort_files_by_number(txt_files)
-log_list = sort_files_by_number(log_files)
+    # Sort the two lists of commands and logs
+    command_list = sort_files_by_number(txt_files)
+    log_list = sort_files_by_number(log_files)
 
-# Stores the processed log data
-data = {}
-for commands, logs in zip(command_list, log_list):
-    data.update(process_log_file(commands, logs))
+    # Stores the processed log data
+    data = {}
+    for commands, logs in zip(command_list, log_list):
+        data.update(process_log_file(commands, logs))
 
-# Combines the processed log data and the screenshots into a single dictionary
-data_fin = {"host": data}#, "screenshots": screenshots}
-current_GMT = time.gmtime()
-time_stamp = calendar.timegm(current_GMT)
-s_time_stamp = str(time_stamp)
-json_filename = "JSON"+s_time_stamp+".JSON"
-write_to_json(data_fin, json_folder, json_filename)
+    # Combines the processed log data and the screenshots into a single dictionary
+    data_fin = {"host": data}#, "screenshots": screenshots}
+    current_GMT = time.gmtime()
+    time_stamp = calendar.timegm(current_GMT)
+    s_time_stamp = str(time_stamp)
+    json_filename = "JSON"+s_time_stamp+".JSON"
+    write_to_json(data_fin, json_folder, json_filename)
 
-# Delete logs and commands file
-delete_files_with_extensions(log_folder, ('.txt', '.log'))
+    # Delete logs and commands file from the /tmp/log-collector folder
+    delete_files_with_extensions(log_folder, ('.txt', '.log', '.count'))
 
-# Move screenshot files into a specific folder
-move_screen_files(screenshot_folder)
+    # Move screenshot files from ./ to screen folder
+    move_screen_files(screenshot_folder)

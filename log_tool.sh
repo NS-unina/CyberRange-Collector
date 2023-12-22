@@ -1,14 +1,24 @@
 #!/bin/zsh
+CYBER_RANGE_COLLECTOR_PATH=~/.cyber-range-collector
+SCREENSHOT_PATH=${CYBER_RANGE_COLLECTOR_PATH}/screenshots
+
 
 if [ "$1" == "-start" ]; then
-    rm  -f ./*.png
+    mkdir -p $SCREENSHOT_PATH
+    rm  -f $SCREENSHOT_PATH/*.png
     # Added configuration to file .zshrc
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-    if grep -q "source $SCRIPT_DIR/config/script-log.sh" ~/.zshrc; then
+    if grep -q "source $SCRIPT_DIR/config/script-log.sh" ~/.zshrc; 
+    then
     else
-    echo "source $SCRIPT_DIR/config/script-log.sh" >> ~/.zshrc
+        echo "source $SCRIPT_DIR/config/script-log.sh" >> ~/.zshrc
     fi
     touch /tmp/script_running
+    # Update the python scripts
+    mkdir -p $CYBER_RANGE_COLLECTOR_PATH
+    cp parse_log.py  ${CYBER_RANGE_COLLECTOR_PATH}/parse_log.py
+    cp send_screen.py ${CYBER_RANGE_COLLECTOR_PATH}/send_screen.py
+    cp .env ${CYBER_RANGE_COLLECTOR_PATH}/.env
     
     # Directory creation
     
@@ -34,8 +44,8 @@ if [ "$1" == "-start" ]; then
             echo "Start collecting screenshots with rate: $3 screen/sec"
             export screen_rate=$(echo "scale=2; 1/$3" | bc)
             nohup zsh -c "while [ -f /tmp/script_running ]; do
-    	source scrot_script.sh $screen_rate
-    	done" &
+    	        source scrot_script.sh $screen_rate
+    	    done" &
         else
             # Error output: missing params
             echo "You need to specify a valid rate argument"
