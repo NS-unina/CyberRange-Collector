@@ -22,7 +22,6 @@ const __dirname = path.dirname(__filename);
 loadEnv(__dirname);
 
 
-
 const PORT = process.env.PORT || 9000;
 
 const app = express();

@@ -17,7 +17,7 @@ const createIndex = async (req, res) => {
       // await createIndex(indexName)
       await createOSIndex(index);
       await createDocument(index, document);
-      res.json("NOT IMPLEMENTED")
+      res.json("")
     }
      catch (error) {
       console.log(error)

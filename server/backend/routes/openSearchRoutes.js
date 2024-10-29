@@ -31,6 +31,16 @@ router.put('/:index',
     bodyParser.json({limit: '50mb'}), 
     createIndex,
 )
+router.post('/:index', 
+    passport.authenticate('bearer', { session: false }),
+    bodyParser.json({limit: '50mb'}), 
+    createIndex
+    // async (req, res) => {
+    //     console.log("SONO QUI")
+    //     console.log(req.body)
+    //     res.send('ciao')
+    // }
+)
 
     // bodyParser.json(), 
     // postBulk)

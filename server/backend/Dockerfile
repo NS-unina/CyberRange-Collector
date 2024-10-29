@@ -1,6 +1,6 @@
-FROM node:latest
+FROM node:14
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY package.json ./
 
@@ -10,4 +10,5 @@ COPY . .
 
 EXPOSE 9000
 
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
+CMD ["npx", "nodemon", "server.js"]

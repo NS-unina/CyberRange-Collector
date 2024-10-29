@@ -18,10 +18,16 @@ services:
       - mongodb
     ports:
       - "9000:9000"
+    environment:
+      - OS_PWD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
     env_file:
       - ./backend/.env
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - backend-net
+    restart: always
     
   client:
     container_name: react-web-app
@@ -35,7 +41,7 @@ services:
       - backend-net
   
   opensearch-node1: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
-    image: opensearchproject/opensearch:latest # Specifying the latest available image - modify if you want a specific version
+    image: opensearchproject/opensearch:2.17.1 
     container_name: opensearch-node1
     environment:
       - cluster.name=opensearch-cluster # Name the cluster
@@ -44,6 +50,8 @@ services:
       - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2 # Nodes eligible to serve as cluster manager
       - bootstrap.memory_lock=true # Disable JVM heap memory swapping
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+
     ulimits:
       memlock:
         soft: -1 # Set memlock to unlimited (no soft or hard limit)
@@ -61,7 +69,7 @@ services:
       - backend-net
 
   opensearch-node2:
-    image: opensearchproject/opensearch:latest # This should be the same image used for opensearch-node1 to avoid issues
+    image: opensearchproject/opensearch:2.17.1 
     container_name: opensearch-node2
     environment:
       - cluster.name=opensearch-cluster
@@ -70,6 +78,8 @@ services:
       - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+
     ulimits:
       memlock:
         soft: -1
@@ -84,7 +94,7 @@ services:
       - backend-net
 
   opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:latest # Make sure the version of opensearch-dashboards matches the version of opensearch installed on other nodes
+    image: opensearchproject/opensearch-dashboards:2.17.1 # Make sure the version of opensearch-dashboards matches the version of opensearch installed on other nodes
     container_name: opensearch-dashboards
     ports:
       - 5601:5601 # Map host port 5601 to container port 5601

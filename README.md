@@ -54,6 +54,14 @@ The compose will start three services:
 * Backend instance
 * Client instance
 
+Before starting the log, you need to create two indexes: 
+* crc-screenshot
+* crc-command
+
+Go to `http://localhost:5601/app/opensearch_index_management_dashboards#/create-index` and create them. 
+
+
+
 ### Start Logging
 To start logging you need to open a terminal session in the folder where the file *log_tool.sh* is and type
 ```shell
