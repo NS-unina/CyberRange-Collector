@@ -61,7 +61,7 @@ preexec() {
           sed -n "${PREVIOUS},${NUM_LINES}p" $SCRIPT_LOG_FILE > $TMP_FILE
 
 
-          python send_cli_logs.py $((PTY_ID -1)) $PREV_COMMAND $TMP_FILE
+          python ${CYBER_RANGE_COLLECTOR_PATH}/send_cli_logs.py $((PTY_ID -1)) $PREV_COMMAND $TMP_FILE
           rm $TMP_FILE
 
           # $SCRIPT_LOG_FILE `cat $CURRENT_SCRIPT_LINE_FILE|xargs` $NUM_LINES

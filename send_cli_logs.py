@@ -65,7 +65,7 @@ def remove_escape_codes(content: str) -> str:
 OS_INDEX="crc-command"
 def send_command_index(base_url, document):
 
-    url = f"{base_url}/{OS_INDEX}"
+    url = f"{base_url}/openSearch/{OS_INDEX}"
     headers = {
     'Authorization': 'Bearer {}'.format(bearer),
     'Content-Type': 'application/json'

@@ -23,6 +23,8 @@ function splitFileName(fileName) {
   
 const createImage = async (req,res) => {
     const files = req.files
+    const {body} = req.body
+    return res.json({status: 'success'})
     const {host} = req.params
     if(!host){
         return res.status(400).json('Host required')

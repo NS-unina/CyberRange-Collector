@@ -66,7 +66,7 @@ def send_image(document):
     # payload.append(document)
     # send = json.dumps(payload)
     print("Data")
-    response = requests.request("PUT", url, headers=headers, json=data)
+    response = requests.request("POST", url, headers=headers, json=data)
     print(response.text)
 
     

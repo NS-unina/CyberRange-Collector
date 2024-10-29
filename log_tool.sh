@@ -18,6 +18,7 @@ if [ "$1" == "-start" ]; then
     mkdir -p $CYBER_RANGE_COLLECTOR_PATH
     cp parse_log.py  ${CYBER_RANGE_COLLECTOR_PATH}/parse_log.py
     cp send_screen.py ${CYBER_RANGE_COLLECTOR_PATH}/send_screen.py
+    cp send_cli_logs.py ${CYBER_RANGE_COLLECTOR_PATH}/send_cli_logs.py
     cp .env ${CYBER_RANGE_COLLECTOR_PATH}/.env
     
     # Directory creation

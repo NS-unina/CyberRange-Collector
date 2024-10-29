@@ -21,7 +21,7 @@ router.get('/single/:id', getSingleImage)
 router.get('/folders', getFolderNames)
 
 //POST Routes
-router.post('/upload/:host',
+router.post('/upload',
     passport.authenticate('bearer', { session: false }),
     fileUpload({ createParentPath: true}),
     filesPayloadExists,

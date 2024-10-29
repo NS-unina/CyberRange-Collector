@@ -28,8 +28,8 @@ const CRC_COMMAND_MAPPING = {
 
 const CRC_SCREEN_MAPPING = {
     "properties": {
-      "image": {
-        "type": "binary"
+      "image_url": {
+        "type": "url"
       },
       "win_name": {
         "type": "text"
